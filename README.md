@@ -25,7 +25,7 @@ Se desarrolló una ruta con **Apache Camel** que:
 **Evidencia:** Archivos JSON generados automáticamente y logs del flujo.
 
 ### 🔹 2️⃣ Shared Database (AgroAnalyzer ↔ FieldControl)
-
+```sql
 Se implementó una base de datos **SQLite** como repositorio común:
 
 CREATE TABLE IF NOT EXISTS sensores (
@@ -33,26 +33,27 @@ CREATE TABLE IF NOT EXISTS sensores (
   fecha TEXT NOT NULL,
   humedad REAL,
   temperatura REAL
-);
+);```
 
 **AgroAnalyzer** inserta los datos procesados.  
 **FieldControl** consulta los valores más recientes.
 
-🧩 **Ventaja:** Ambos sistemas acceden a la misma fuente de información sin duplicar datos.  
-⚠️ **Riesgo:** La concurrencia o bloqueo puede afectar el rendimiento si varios sistemas escriben simultáneamente.
+**Ventaja:** Ambos sistemas acceden a la misma fuente de información sin duplicar datos.  
+**Riesgo:** La concurrencia o bloqueo puede afectar el rendimiento si varios sistemas escriben simultáneamente.
 
 ## 🔹 3️⃣ Remote Procedure Call (RPC Simulado con Apache Camel)
 
-Se simuló una comunicación **síncrona** entre **FieldControl** y **AgroAnalyzer** usando rutas `direct:` de **Apache Camel**.
+Se simuló una comunicación **síncronaza** entre **FieldControl** y **AgroAnalyzer** usando rutas `direct:` de **Apache Camel**.
 
 ### 💻 Cliente (FieldControl)
 
+```java
 from("direct:solicitarLectura")
     .routeId("rpc-cliente")
     .setHeader("id_sensor", simple("${body}"))
     .log("[CLIENTE] Solicitando lectura del sensor ${header.id_sensor}")
     .toD("direct:rpc.obtenerUltimo?timeout=2000")
-    .log("[CLIENTE] Respuesta recibida: ${body}");
+    .log("[CLIENTE] Respuesta recibida: ${body}");```
 
 🧰 Tecnologías Utilizadas
 Componente	Herramienta / Versión
