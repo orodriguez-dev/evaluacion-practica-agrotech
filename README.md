@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS sensores (
   humedad REAL,
   temperatura REAL
 );
+---
 
 **AgroAnalyzer** inserta los datos procesados.  
 **FieldControl** consulta los valores más recientes.
@@ -55,7 +56,7 @@ from("direct:solicitarLectura")
     .log("[CLIENTE] Solicitando lectura del sensor ${header.id_sensor}")
     .toD("direct:rpc.obtenerUltimo?timeout=2000")
     .log("[CLIENTE] Respuesta recibida: ${body}");
-    
+---
 🧰 Tecnologías Utilizadas
 Componente	Herramienta / Versión
 ☕ Lenguaje	Java 25
