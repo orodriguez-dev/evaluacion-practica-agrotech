@@ -29,11 +29,11 @@ Se desarrolló una ruta con **Apache Camel** que:
 Se implementó una base de datos **SQLite** como repositorio común:
 
 ```sql
-CREATE TABLE sensores (
-  id_sensor VARCHAR(10),
-  fecha TEXT,
-  humedad DOUBLE,
-  temperatura DOUBLE
+CREATE TABLE IF NOT EXISTS sensores (
+  id_sensor TEXT NOT NULL,
+  fecha TEXT NOT NULL,
+  humedad REAL,
+  temperatura REAL
 );
 
 **AgroAnalyzer** inserta los datos procesados.  
@@ -47,6 +47,7 @@ CREATE TABLE sensores (
 Se simuló una comunicación **síncrona** entre **FieldControl** y **AgroAnalyzer** usando rutas `direct:` de **Apache Camel**.
 
 ### 💻 Cliente (FieldControl)
+
 ```java
 from("direct:solicitarLectura")
     .routeId("rpc-cliente")
@@ -54,7 +55,7 @@ from("direct:solicitarLectura")
     .log("[CLIENTE] Solicitando lectura del sensor ${header.id_sensor}")
     .toD("direct:rpc.obtenerUltimo?timeout=2000")
     .log("[CLIENTE] Respuesta recibida: ${body}");
-
+    
 🧰 Tecnologías Utilizadas
 Componente	Herramienta / Versión
 ☕ Lenguaje	Java 25
