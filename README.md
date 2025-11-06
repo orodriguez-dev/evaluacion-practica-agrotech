@@ -36,32 +36,24 @@ CREATE TABLE sensores (
   temperatura DOUBLE
 );
 
-- **AgroAnalyzer** inserta los datos procesados.
-- **FieldControl** consulta los valores más recientes.
+**AgroAnalyzer** inserta los datos procesados.  
+**FieldControl** consulta los valores más recientes.
 
-**Ventaja:** Ambos sistemas acceden a la misma fuente de información sin duplicar datos.
-**Riesgo:** La concurrencia o bloqueo puede afectar el rendimiento si varios sistemas escriben simultáneamente.
+🧩 **Ventaja:** Ambos sistemas acceden a la misma fuente de información sin duplicar datos.  
+⚠️ **Riesgo:** La concurrencia o bloqueo puede afectar el rendimiento si varios sistemas escriben simultáneamente.
 
-### 🔹 3️⃣ Remote Procedure Call (RPC Simulado con Apache Camel)
-Se simuló una comunicación síncrona entre FieldControl y AgroAnalyzer usando rutas direct: de Apache Camel.
+## 🔹 3️⃣ Remote Procedure Call (RPC Simulado con Apache Camel)
 
-💻 **Cliente (FieldControl)**
+Se simuló una comunicación **síncrona** entre **FieldControl** y **AgroAnalyzer** usando rutas `direct:` de **Apache Camel**.
 
+### 💻 Cliente (FieldControl)
+```java
 from("direct:solicitarLectura")
     .routeId("rpc-cliente")
     .setHeader("id_sensor", simple("${body}"))
     .log("[CLIENTE] Solicitando lectura del sensor ${header.id_sensor}")
     .toD("direct:rpc.obtenerUltimo?timeout=2000")
     .log("[CLIENTE] Respuesta recibida: ${body}");
-
-🖥️ **Servidor (AgroAnalyzer)**
-
-from("direct:rpc.obtenerUltimo")
-    .routeId("rpc-servidor")
-    .log("[SERVIDOR] Solicitud recibida para sensor ${header.id_sensor}")
-    .bean(ServicioAnalitica.class, "getUltimoValor");
-
-**Ventaja:** Simula una llamada en tiempo real entre sistemas, representando un flujo síncrono.
 
 🧰 Tecnologías Utilizadas
 Componente	Herramienta / Versión
