@@ -68,3 +68,25 @@ from("direct:solicitarLectura")
 | 💾 **Base de datos** | SQLite |
 | 🧑‍💻 **IDE recomendado** | Visual Studio Code |
 | 🧾 **Logging** | Apache Camel Logs |
+
+### 🛠️ Compilar y ejecutar el proyecto
+
+**Compilar el proyecto**
+
+Para generar el archivo ejecutable del proyecto, ejecuta el siguiente comando Maven desde la raíz del repositorio:
+
+``` bash
+mvn clean package
+```
+**Resultado de la compilación**
+
+Si la compilación se realiza correctamente, Maven generará el archivo JAR ejecutable en la carpeta target con el siguiente nombre:
+
+``` bash
+target/evaluacion-practica-agrotech-1.0-SNAPSHOT-shaded.jar
+```
+**Para iniciar la aplicación y activar los flujos de integración en Apache Camel, ejecuta el siguiente comando:**
+
+``` bash
+java -jar target/evaluacion-practica-agrotech-1.0-SNAPSHOT-shaded.jar
+```
