@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS sensores (
 **Ventaja:** Ambos sistemas acceden a la misma fuente de información sin duplicar datos.  
 **Riesgo:** La concurrencia o bloqueo puede afectar el rendimiento si varios sistemas escriben simultáneamente.
 
-## 🔹 3️⃣ Remote Procedure Call (RPC Simulado con Apache Camel)
+### 🔹 3️⃣ Remote Procedure Call (RPC Simulado con Apache Camel)
 
 Se simuló una comunicación **síncronaza** entre **FieldControl** y **AgroAnalyzer** usando rutas `direct:` de **Apache Camel**.
 
@@ -58,11 +58,13 @@ from("direct:solicitarLectura")
     .log("[CLIENTE] Respuesta recibida: ${body}");
 ```
 
-🧰 Tecnologías Utilizadas
-Componente	Herramienta / Versión
-☕ Lenguaje	Java 25
-🐫 Framework	Apache Camel 4.x
-📦 Gestor de dependencias	Maven
-💾 Base de datos	SQLite
-🧑‍💻 IDE recomendado	Visual Studio Code
-🧾 Logging	Apache Camel Logs
+### 🧰 Tecnologías Utilizadas
+
+| Componente    |   Herramienta / Versión  |
+|---------------|---------------------------|
+| ☕ **Lenguaje** | Java 25 |
+| 🐫 **Framework** | Apache Camel 4.x |
+| 📦 **Gestor de dependencias** | Maven |
+| 💾 **Base de datos** | SQLite |
+| 🧑‍💻 **IDE recomendado** | Visual Studio Code |
+| 🧾 **Logging** | Apache Camel Logs |
